@@ -1,0 +1,116 @@
+import random
+
+# Variables to store data, which can be updated by the user
+profile_id = random.randint(1000, 9999)
+library_name = "Library " + str(random.randint(1, 100))
+registration_date = f"{random.randint(1, 28)}/0{random.randint(1, 9)}/202{random.randint(0, 3)}"
+
+total_users = random.randint(50, 100)
+total_admins = random.randint(1, 5)
+total_librarians = random.randint(2, 10)
+total_members = total_users - total_admins - total_librarians
+
+total_books = random.randint(500, 1000)
+issued_books = random.randint(100, 300)
+due_books = random.randint(10, 50)
+
+subscribed_members = random.randint(100, 500)
+expired_members = random.randint(20, 100)
+
+while True:
+    print("\nWELCOME TO DIGITAL LIBRARY")
+    print("Main Menu : 1")
+    a = int(input("Input >> "))
+
+    if a == 1:
+        while True:  # Add a loop here for the main submenu
+            print("\n--- Admin Dashboard : 1 ---")
+            print("--- User Management : 2 ---")
+            print("--- Book Management : 3 ---")
+            print("--- Membership Management : 4 ---")
+            print("--- Previous Menu : 5 ---")
+            a = int(input("Input >> "))
+
+            # Admin Dashboard
+            if a == 1:
+                while True:
+                    print("\n--- Admin Dashboard ---")
+                    print(f"Profile ID: {profile_id}")
+                    print(f"Library Name: {library_name}")
+                    print(f"Registration Date: {registration_date}")
+                    print("--- Update Data : 1 ---")
+                    print("--- Previous Menu : 2 ---")
+                    choice = int(input("Input >> "))
+
+                    if choice == 1:
+                        # Updating Admin Dashboard values
+                        profile_id = int(input("Enter new Profile ID: "))
+                        library_name = input("Enter new Library Name: ")
+                        registration_date = input("Enter new Registration Date (DD/MM/YYYY): ")
+                    elif choice == 2:
+                        break  # Go back to the previous menu (Main Menu)
+
+            # User Management
+            elif a == 2:
+                while True:
+                    print("\n--- User Management ---")
+                    print(f"Total Users: {total_users}")
+                    print(f"Admins: {total_admins}")
+                    print(f"Librarians: {total_librarians}")
+                    print(f"Members: {total_members}")
+                    print("--- Update Data : 1 ---")
+                    print("--- Previous Menu : 2 ---")
+                    choice = int(input("Input >> "))
+
+                    if choice == 1:
+                        # Updating User Management values
+                        total_users = int(input("Enter new Total Users: "))
+                        total_admins = int(input("Enter new Admins: "))
+                        total_librarians = int(input("Enter new Librarians: "))
+                        total_members = total_users - total_admins - total_librarians
+                    elif choice == 2:
+                        break  # Go back to the previous menu (Main Menu)
+
+            # Book Management
+            elif a == 3:
+                while True:
+                    print("\n--- Book Management ---")
+                    print(f"Total Books: {total_books}")
+                    print(f"Issued Books: {issued_books}")
+                    print(f"Books Due for Return: {due_books}")
+                    print("--- Update Data : 1 ---")
+                    print("--- Previous Menu : 2 ---")
+                    choice = int(input("Input >> "))
+
+                    if choice == 1:
+                        # Updating Book Management values
+                        total_books = int(input("Enter new Total Books: "))
+                        issued_books = int(input("Enter new Issued Books: "))
+                        due_books = int(input("Enter new Books Due for Return: "))
+                    elif choice == 2:
+                        break  # Go back to the previous menu (Main Menu)
+
+            # Membership Management
+            elif a == 4:
+                while True:
+                    print("\n--- Membership Management ---")
+                    print(f"Subscribed Members: {subscribed_members}")
+                    print(f"Expired Memberships: {expired_members}")
+                    print("--- Update Data : 1 ---")
+                    print("--- Previous Menu : 2 ---")
+                    choice = int(input("Input >> "))
+
+                    if choice == 1:
+                        # Updating Membership Management values
+                        subscribed_members = int(input("Enter new Subscribed Members: "))
+                        expired_members = int(input("Enter new Expired Memberships: "))
+                    elif choice == 2:
+                        break  # Go back to the previous menu (Main Menu)
+
+            # Go back to Main Menu
+            elif a == 5:
+                print("Returning to Main Menu...\n")
+                break  # Exit the submenu loop and return to the main menu
+
+            else:
+                print("Invalid Option, please try again.")
