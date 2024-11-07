@@ -1,106 +1,219 @@
+import pandas as pd
+import matplotlib.pyplot as plt
 
-profile_id = 2304
-library_name = 'Bhanu Library'
-registration_date = '23/04/2007'
+name = "Bhanu"
+print("\n---------------------------------------------------Hello", name, ". WELCOME TO LUCKNOW AIRPORT--------------------------------------------------------\n")
 
-total_users = 150
-total_admins = 5
-total_librarians = 3
-total_members = total_users - total_admins - total_librarians
+def main_menu():
+    while True:
+        print("\n                                                        Airport Management System\n")
+        print("\n                                                        1: Flight Details")
+        print("                                                        2: Book/Cancel Tickets")
+        print("                                                        3: Lost and Found Items")
+        print("                                                        4: Graphical Representation")
+        print("                                                        5: Exit")
+        
+        choice = input("Enter your choice: ")
+        
+        if choice == '1':
+            flights_menu()
+        elif choice == '2':
+            tickets_menu()
+        elif choice == '3':
+            lost_and_found_menu()
+        elif choice == '4':
+            graphical_representation()
+        elif choice == '5':
+            print("Exiting the system.")
+            break
+        else:
+            print("Invalid choice, please try again.")
 
-total_books = 450
-issued_books = 150
-due_books = 50
+def flights_menu():
+    while True:
+        print("\n                                                        Flight Details\n")
+        print("                                                       a: View our Database")
+        print("                                                       b: See individual flight details")
+        print("                                                       c: Add flight details")
+        print("                                                       d: Update flight details")
+        print("                                                       e: Remove flight details")
+        print("                                                       f: Exit")
+        
+        choice = input("Enter your choice: ").lower()
+        
+        if choice == 'a':
+            view_database()
+        elif choice == 'b':
+            view_individual_flight()
+        elif choice == 'c':
+            add_flight_details()
+        elif choice == 'd':
+            update_flight_details()
+        elif choice == 'e':
+            remove_flight_details()
+        elif choice == 'f':
+            break
+        else:
+            print("Invalid choice, please try again.")
 
-subscribed_members = 400
-expired_members = 189
 
-while True:
-    print("\nWELCOME TO DIGITAL LIBRARY")
-    print("Main Menu : 1")
-    a = int(input("Input >> "))
+def view_database():
+    print(pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv"))
 
-    if a == 1:
-        while True: 
-            print("\n--- Admin Dashboard : 1 ---")
-            print("--- User Management : 2 ---")
-            print("--- Book Management : 3 ---")
-            print("--- Membership Management : 4 ---")
-            print("--- Previous Menu :   5 ---")
-            a = int(input("Input >> "))
 
-            
-            if a == 1:
-                while True:
-                    print("\n--- Admin Dashboard ---")
-                    print("Profile ID: ",profile_id)
-                    print("Library Name: ",library_name)
-                    print("Registration Date: ",registration_date)
-                    print("--- Update Data : 1 ---")
-                    print("--- Previous Menu : 2 ---")
-                    choice = int(input("Input >> "))
+def view_individual_flight():
+    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv")
+    search_type = input("\n                                     Do you want to search by (1) Flight Number or (2) Flight Name? Enter 1 or 2: ")
+    search_value = input("\n                                     Enter the value to search: ")
+    
+    if search_type == '1':
+        result = df[df['Flight No'] == search_value]
+    elif search_type == '2':
+        result = df[df['Flight Name'].str.lower() == search_value.lower()]
+    
+    if not result.empty:
+        print(result)
+    else:
+        print("\n\nFlight not found.")
 
-                    if choice == 1:
-                        profile_id = int(input("Enter new Profile ID: "))
-                        library_name = input("Enter new Library Name: ")
-                        registration_date = input("Enter new Registration Date (DD/MM/YYYY): ")
-                    elif choice == 2:
-                        break
 
-            elif a == 2:
-                while True:
-                    print("\n--- User Management ---")
-                    print("Total Users: ",total_users)
-                    print("Admins: ",total_admins)
-                    print("Librarians: ",total_librarians)
-                    print("Members: ",total_members)
-                    print("--- Update Data : 1 ---")
-                    print("--- Previous Menu : 2 ---")
-                    choice = int(input("Input >> "))
+import pandas as pd
 
-                    if choice == 1:
-                        total_users = int(input("Enter new Total Users: "))
-                        total_admins = int(input("Enter new Admins: "))
-                        total_librarians = int(input("Enter new Librarians: "))
-                        total_members = total_users - total_admins - total_librarians
-                    elif choice == 2:
-                        break 
+def add_flight_details():
+   import pandas as pd
 
-            elif a == 3:
-                while True:
-                    print("\n--- Book Management ---")
-                    print("Total Books: ",total_books)
-                    print("Issued Books: ",issued_books)
-                    print("Books Due for Return: ",due_books)
-                    print("--- Update Data : 1 ---")
-                    print("--- Previous Menu : 2 ---")
-                    choice = int(input("Input >> "))
+def add_flight_details():
+    new_flight = {
+        "Flight No": input("Enter flight number: "),
+        "Flight Name": input("Enter flight name: "),
+        "Total Passengers": input("Enter total passengers: "),
+        "Type": input("Enter flight type: "),
+        "Halt": input("Enter halt: "),
+        "Departure Time": input("Enter departure time: "),
+        "Arrival Time": input("Enter arrival time: "),
+        "Ticket Price": input("Enter ticket price: "),
+        "Revenue": input("Enter Revenue: ")
+    }
+    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv")
+    new_flight_df = pd.DataFrame([new_flight])
+    df = pd.concat([df, new_flight_df], ignore_index=True)
+    df.to_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv", index=False)
+    print("\nFlight added successfully.")
 
-                    if choice == 1:
-                        total_books = int(input("Enter new Total Books: "))
-                        issued_books = int(input("Enter new Issued Books: "))
-                        due_books = int(input("Enter new Books Due for Return: "))
-                    elif choice == 2:
-                        break
 
-            elif a == 4:
-                while True:
-                    print("\n--- Membership Management ---")
-                    print("Subscribed Members: ",subscribed_members)
-                    print("Expired Memberships: ",expired_members)
-                    print("--- Update Data : 1 ---")
-                    print("--- Previous Menu : 2 ---")
-                    choice = int(input("Input >> "))
+def update_flight_details():
+    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv")
+    flight_no = input("Enter flight number to update: ")
+    if flight_no in df['Flight No'].values:
+        print("\n-----------------------------------------------------Updating details for flight", flight_no,"--------------------------------------------------------")
+        for column in df.columns:
+            if column != 'Flight No':
+                new_value = input("Enter new",column,"(or press Enter to keep current): ")
+                if new_value:
+                    df.loc[df['Flight No'] == flight_no, column] = new_value
+        df.to_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv", index=False)
+        print("Flight details updated.")
+    else:
+        print("Flight number not found.")
 
-                    if choice == 1:
-                        subscribed_members = int(input("Enter new Subscribed Members: "))
-                        expired_members = int(input("Enter new Expired Memberships: "))
-                    elif choice == 2:
-                        break
 
-            elif a == 5:
-                print("Returning to Main Menu...\n")
-                break
+def remove_flight_details():
+    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv")
+    flight_no = input("Enter flight number to remove: ")
+    df = df[df['Flight No'] != flight_no]
+    df.to_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv, index=False")
+    print("\n                                                   Flight removed successfully.")
 
-            else:
-                print("Invalid Option, please try again.")
+
+def tickets_menu():
+    while True:
+        print("\n                                                       Ticket Management\n")
+        print("                                                      a: Book Flight Tickets")
+        print("                                                      b: Cancel Ticket")
+        print("                                                      c: Exit")
+        
+        choice = input("Enter your choice: ").lower()
+        
+        if choice == 'a':
+            book()
+        elif choice == 'b':
+            cancel()
+        elif choice == 'c':
+            break
+        else:
+            print("Invalid choice, please try again.")
+
+
+def lost_and_found_menu():
+    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\items.csv")
+    flight_no = input("Enter your flight number for Lost and Found: ")
+    result = df[df['Flight No'] == flight_no]
+    if not result.empty:
+        print(result)
+    else:
+        print("No lost and found items for this flight.")
+
+
+def graphical_representation():
+    while True:
+        df = pd.read_csv('C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv')
+        revenue = df['Revenue'].astype(int)
+        flights = df['Flight No']
+        plt.bar(flights, revenue)
+        plt.title("Revenue by Flight")
+        plt.xlabel("Flight Number")
+        plt.ylabel("Revenue (INR)")
+        plt.show()
+
+
+def book():
+    pnr_no = input("Enter PNR Number: ")
+    passenger_name = input("Enter Passenger Name: ")
+    gender = input("Enter Gender (M/F/Other): ")
+    govt_id = input("Enter Govt. ID (e.g., Aadhar, Passport): ")
+    phone_number = input("Enter Phone Number: ")
+    departure_city = input("Enter Departure City: ")
+    arrival_city = input("Enter Arrival City: ")
+    
+    
+    file_path = "C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\passenger.csv"
+    df = pd.read_csv(file_path)
+    if pnr_no in df['PNR No'].values:
+        print("This PNR number is already booked. Please try again with a different PNR.")
+    else:
+        new_booking = {
+            "PNR No": pnr_no,
+            "Passenger Name": passenger_name,
+            "Gender": gender,
+            "Govt. ID": govt_id,
+            "Phone Number": phone_number,
+            "Departure City": departure_city,
+            "Arrival City": arrival_city
+        }
+        
+        new_booking_df = pd.DataFrame([new_booking])
+        df = pd.concat([df, new_booking_df], ignore_index=True)
+        df.to_csv(file_path, index=False)
+        
+        print("Ticket booked successfully for",passenger_name,"with PNR",pnr_no)
+
+
+
+def cancel():
+    pnr_no = input("Enter PNR Number to cancel: ")   
+    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\passenger.csv")
+    booking = df[df['PNR No'] == pnr_no]
+    
+    if booking.empty:
+        print(f"No booking found for PNR {pnr_no}.")
+    else:
+        confirmation = input(f"Are you sure you want to cancel the booking for PNR {pnr_no}? (y/n): ").lower()
+        if confirmation == 'y':
+            df = df.drop(booking.index)
+            df.to_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\passenger.csv", index=False)
+            print(f"Booking for PNR {pnr_no} has been successfully canceled.")
+        else:
+            print("Cancellation aborted.")
+
+
+main_menu()
