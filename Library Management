@@ -1,0 +1,111 @@
+
+
+profile_id = 2304
+library_name = 'Bhanu Library'
+registration_date = '23/04/2007'
+
+total_users = 150
+total_admins = 5
+total_librarians = 3
+total_members = total_users - total_admins - total_librarians
+
+total_books = 450
+issued_books = 150
+due_books = 50
+
+subscribed_members = 400
+expired_members = 189
+
+print('''                                       ------------ LIBRARY MANAGMENT PROJECT ------------
+
+
+MADE BY : BHANU PRATAP SINGH''')
+
+while True:
+    print("\n\nMain Menu : 1")
+    a = int(input("Input >> "))
+
+    if a == 1:
+        while True: 
+            print("\n--- Admin Dashboard : 1 ---")
+            print("--- User Management : 2 ---")
+            print("--- Book Management : 3 ---")
+            print("--- Membership Management : 4 ---")
+            print("--- Previous Menu : 5 ---")
+            a = int(input("\nInput >> "))
+
+            
+            if a == 1:
+                while True:
+                    print("\n--- Admin Dashboard ---")
+                    print("Profile ID: ",profile_id)
+                    print("Library Name: ",library_name)
+                    print("Registration Date: ",registration_date)
+                    print("--- Update Data : 1 ---")
+                    print("--- Previous Menu : 2 ---")
+                    choice = int(input("Input >> "))
+
+                    if choice == 1:
+                        profile_id = int(input("Enter new Profile ID: "))
+                        library_name = input("Enter new Library Name: ")
+                        registration_date = input("Enter new Registration Date (DD/MM/YYYY): ")
+                    elif choice == 2:
+                        break
+
+            elif a == 2:
+                while True:
+                    print("\n--- User Management ---")
+                    print("Total Users: ",total_users)
+                    print("Admins: ",total_admins)
+                    print("Librarians: ",total_librarians)
+                    print("Members: ",total_members)
+                    print("--- Update Data : 1 ---")
+                    print("--- Previous Menu : 2 ---")
+                    choice = int(input("Input >> "))
+
+                    if choice == 1:
+                        total_users = int(input("Enter new Total Users: "))
+                        total_admins = int(input("Enter new Admins: "))
+                        total_librarians = int(input("Enter new Librarians: "))
+                        total_members = total_users - total_admins - total_librarians
+                    elif choice == 2:
+                        break 
+
+            elif a == 3:
+                while True:
+                    print("\n--- Book Management ---")
+                    print("Total Books: ",total_books)
+                    print("Issued Books: ",issued_books)
+                    print("Books Due for Return: ",due_books)
+                    print("--- Update Data : 1 ---")
+                    print("--- Previous Menu : 2 ---")
+                    choice = int(input("Input >> "))
+
+                    if choice == 1:
+                        total_books = int(input("Enter new Total Books: "))
+                        issued_books = int(input("Enter new Issued Books: "))
+                        due_books = int(input("Enter new Books Due for Return: "))
+                    elif choice == 2:
+                        break
+
+            elif a == 4:
+                while True:
+                    print("\n--- Membership Management ---")
+                    print("Subscribed Members: ",subscribed_members)
+                    print("Expired Memberships: ",expired_members)
+                    print("--- Update Data : 1 ---")
+                    print("--- Previous Menu : 2 ---")
+                    choice = int(input("Input >> "))
+
+                    if choice == 1:
+                        subscribed_members = int(input("Enter new Subscribed Members: "))
+                        expired_members = int(input("Enter new Expired Memberships: "))
+                    elif choice == 2:
+                        break
+
+            elif a == 5:
+                print("Returning to Main Menu...\n")
+                break
+
+            else:
+                print("Invalid Option, please try again.")
