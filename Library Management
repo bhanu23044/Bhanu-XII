@@ -19,7 +19,7 @@ expired_members = 189
 print('''                                       ------------ LIBRARY MANAGMENT PROJECT ------------
 
 
-MADE BY : BHANU PRATAP SINGH''')
+MADE BY : Akku GADHA''')
 
 while True:
     print("\n\nMain Menu : 1")
