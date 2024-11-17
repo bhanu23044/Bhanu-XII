@@ -1,6 +1,10 @@
 import pandas as pd
 import matplotlib.pyplot as plt
 
+database = "C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv"
+items = "C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\items.csv"
+passenger = "C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\passenger.csv"
+
 name = "Bhanu"
 print("\n---------------------------------------------------Hello", name, ". WELCOME TO LUCKNOW AIRPORT--------------------------------------------------------\n")
 
@@ -56,13 +60,11 @@ def flights_menu():
         else:
             print("Invalid choice, please try again.")
 
-
 def view_database():
-    print(pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv"))
-
+    print(pd.read_csv(database))
 
 def view_individual_flight():
-    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv")
+    df = pd.read_csv(database)
     search_type = input("\n                                     Do you want to search by (1) Flight Number or (2) Flight Name? Enter 1 or 2: ")
     search_value = input("\n                                     Enter the value to search: ")
     
@@ -72,15 +74,9 @@ def view_individual_flight():
         result = df[df['Flight Name'].str.lower() == search_value.lower()]
     
     if not result.empty:
-        print(result)
+        print("\n", result)
     else:
         print("\n\nFlight not found.")
-
-
-import pandas as pd
-
-def add_flight_details():
-   import pandas as pd
 
 def add_flight_details():
     new_flight = {
@@ -93,37 +89,39 @@ def add_flight_details():
         "Arrival Time": input("Enter arrival time: "),
         "Ticket Price": input("Enter ticket price: "),
         "Revenue": input("Enter Revenue: ")
-    }
-    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv")
+    } 
+    df = pd.read_csv(database)
     new_flight_df = pd.DataFrame([new_flight])
     df = pd.concat([df, new_flight_df], ignore_index=True)
-    df.to_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv", index=False)
+    df.to_csv(database, index=False)
     print("\nFlight added successfully.")
 
-
 def update_flight_details():
-    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv")
-    flight_no = input("Enter flight number to update: ")
-    if flight_no in df['Flight No'].values:
-        print("\n-----------------------------------------------------Updating details for flight", flight_no,"--------------------------------------------------------")
+    df = pd.read_csv(database)
+    flight_no = input("Enter flight number to update: ").strip()
+    
+    if flight_no in df['Flight No'].astype(str).values:
+        print(f"\nUpdating details for flight {flight_no}")
         for column in df.columns:
             if column != 'Flight No':
-                new_value = input("Enter new",column,"(or press Enter to keep current): ")
+                new_value = input(f"Enter new {column} (or press Enter to keep current): ").strip()
                 if new_value:
                     df.loc[df['Flight No'] == flight_no, column] = new_value
-        df.to_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv", index=False)
-        print("Flight details updated.")
+        df.to_csv(database, index=False)
+        print("Flight details updated successfully.")
     else:
         print("Flight number not found.")
 
-
 def remove_flight_details():
-    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv")
-    flight_no = input("Enter flight number to remove: ")
-    df = df[df['Flight No'] != flight_no]
-    df.to_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv, index=False")
-    print("\n                                                   Flight removed successfully.")
-
+    df = pd.read_csv(database)
+    flight_no = input("Enter flight number to remove: ").strip()
+    
+    if flight_no in df['Flight No'].astype(str).values:
+        df = df[df['Flight No'] != flight_no]
+        df.to_csv(database, index=False)
+        print("Flight removed successfully.")
+    else:
+        print("Flight number not found.")
 
 def tickets_menu():
     while True:
@@ -143,9 +141,8 @@ def tickets_menu():
         else:
             print("Invalid choice, please try again.")
 
-
 def lost_and_found_menu():
-    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\items.csv")
+    df = pd.read_csv(items)
     flight_no = input("Enter your flight number for Lost and Found: ")
     result = df[df['Flight No'] == flight_no]
     if not result.empty:
@@ -153,18 +150,19 @@ def lost_and_found_menu():
     else:
         print("No lost and found items for this flight.")
 
-
 def graphical_representation():
-    while True:
-        df = pd.read_csv('C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\database.csv')
-        revenue = df['Revenue'].astype(int)
+    df = pd.read_csv(database)
+    if 'Revenue' in df.columns and 'Flight No' in df.columns:
+        df['Revenue'] = pd.to_numeric(df['Revenue'], errors='coerce').fillna(0)
+        revenue = df['Revenue']
         flights = df['Flight No']
         plt.bar(flights, revenue)
         plt.title("Revenue by Flight")
         plt.xlabel("Flight Number")
         plt.ylabel("Revenue (INR)")
         plt.show()
-
+    else:
+        print("Required columns 'Revenue' or 'Flight No' are missing in the dataset.")
 
 def book():
     pnr_no = input("Enter PNR Number: ")
@@ -175,9 +173,7 @@ def book():
     departure_city = input("Enter Departure City: ")
     arrival_city = input("Enter Arrival City: ")
     
-    
-    file_path = "C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\passenger.csv"
-    df = pd.read_csv(file_path)
+    df = pd.read_csv(passenger)
     if pnr_no in df['PNR No'].values:
         print("This PNR number is already booked. Please try again with a different PNR.")
     else:
@@ -190,18 +186,14 @@ def book():
             "Departure City": departure_city,
             "Arrival City": arrival_city
         }
-        
         new_booking_df = pd.DataFrame([new_booking])
         df = pd.concat([df, new_booking_df], ignore_index=True)
-        df.to_csv(file_path, index=False)
-        
-        print("Ticket booked successfully for",passenger_name,"with PNR",pnr_no)
-
-
+        df.to_csv(passenger, index=False)
+        print("Ticket booked successfully for", passenger_name, "with PNR", pnr_no)
 
 def cancel():
     pnr_no = input("Enter PNR Number to cancel: ")   
-    df = pd.read_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\passenger.csv")
+    df = pd.read_csv(passenger)
     booking = df[df['PNR No'] == pnr_no]
     
     if booking.empty:
@@ -210,10 +202,9 @@ def cancel():
         confirmation = input(f"Are you sure you want to cancel the booking for PNR {pnr_no}? (y/n): ").lower()
         if confirmation == 'y':
             df = df.drop(booking.index)
-            df.to_csv("C:\\Users\\vaish\\OneDrive\\Desktop\\AIRPORT\\passenger.csv", index=False)
+            df.to_csv(passenger, index=False)
             print(f"Booking for PNR {pnr_no} has been successfully canceled.")
         else:
             print("Cancellation aborted.")
-
 
 main_menu()
