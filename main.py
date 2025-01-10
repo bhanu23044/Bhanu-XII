@@ -1,7 +1,5 @@
 import streamlit as st
 import pandas as pd
-import matplotlib.pyplot as plt
-import plotly.figure_factory as ff
 
 st.title("Analysis of Data")
 csv1 = st.file_uploader("Upload Your File",type="csv")
